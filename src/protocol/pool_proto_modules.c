@@ -1904,7 +1904,7 @@ POOL_STATUS ReadyForQuery(POOL_CONNECTION *frontend,
 						/* However, if the query is "SET TRANSACTION READ ONLY" or its variant,
 						 * don't set it.
 						 */
-						if (!pool_is_transaction_read_only(node))
+						if (!pool_is_transaction_read_only(node) && !pool_is_set_timezone(node))
 						{
 							ereport(DEBUG1,
 									(errmsg("not SET TRANSACTION READ ONLY")));

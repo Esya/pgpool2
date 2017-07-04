@@ -1830,6 +1830,28 @@ void pool_unset_cache_exceeded(void)
 }
 
 /*
+ * Return true if the query is a SET TIME ZONE query
+ */
+bool pool_is_set_timezone(Node *node)
+{
+	bool ret = false;
+
+	if (!IsA(node, VariableSetStmt))
+		return ret;
+
+	/*
+	 * SET TIME ZONE
+	 */
+	if (((VariableSetStmt *)node)->kind == VAR_SET_VALUE &&
+		!strcmp(((VariableSetStmt *)node)->name, "timezone"))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+/*
  * Return true if one of followings is true
  *
  * SET transaction_read_only TO on
