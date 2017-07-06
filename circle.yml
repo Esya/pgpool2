@@ -7,8 +7,7 @@ jobs:
     working_directory: ~/
 
     steps:
-      # command will execute in trusty container
-      # and can access mongo on localhost
-      - apt-get update
-      - apt-get install -y devscripts debhelper libpq-dev postgresql-server-dev-all libpam0g-dev libssl-dev libmemcached-dev dh-autoreconf ruby
-      - debuild -us -uc -b
+      - run: |
+        apt-get update
+        apt-get install -y devscripts debhelper libpq-dev postgresql-server-dev-all libpam0g-dev libssl-dev libmemcached-dev dh-autoreconf ruby libhiredis-dev
+        debuild -us -uc -b
